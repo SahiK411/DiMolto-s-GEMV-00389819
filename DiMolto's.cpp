@@ -224,7 +224,20 @@ void showTakeOuts(takeOut *order){
     cout << "Metodo de pago: " << (*order).paymentMethod << endl;
 }
 
+void showHouseOrders(inHouseOrder *order){
+    cout << "Nombre del cliente: " << (*order).clientName << endl;
+    cout << "Personas en la mesa: " << (*order).clientsPerTable << endl;
+    cout << "Plato principal: " << (*order).mainDish << endl;
+    cout << "Aperitivo: " << (*order).appetizer << endl;
+    cout << "Bebida: " << (*order).drink << endl;
+    cout << "Precio: " << (*order).price << endl;
+    cout << "Metodo de pago: " << (*order).paymentMethod << endl;
+}
 
+void showTotalPrice(takeOut *takeOrder, inHouseOrder *houseOrder, float *totalPrice){
+    *totalPrice = (*takeOrder).price + (*houseOrder).price;
+    cout << "El precio total es: " << *totalPrice << "$\n";
+}
 
 int main(){
     //Flag used in menu display.
