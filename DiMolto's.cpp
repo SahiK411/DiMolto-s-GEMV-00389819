@@ -213,6 +213,17 @@ void reusedMenu(string option1, string option2, float *price, string *chosenOpti
     }
 }
 
+void showTakeOuts(takeOut *order){
+    cout << "Nombre del cliente: " << (*order).clientName << endl;
+    cout << "Direccion del cliente: " << (*order).clientAddress << endl;
+    cout << "Numero del cliente: " << (*order).clientPhoneNumber << endl;
+    cout << "Plato principal: " << (*order).mainDish << endl;
+    cout << "Aperitivo: " << (*order).appetizer << endl;
+    cout << "Bebida: " << (*order).drink << endl;
+    cout << "Precio: " << (*order).price << endl;
+    cout << "Metodo de pago: " << (*order).paymentMethod << endl;
+}
+
 
 
 int main(){
