@@ -24,21 +24,20 @@ struct inHouseOrder{
 };
 
 //Overloading functions
-void addTakeOut(){
-}
-void addHouseOrder(){
-}
-void showTakeOuts(){
-}
-void showHouseOrders(){
-}
-void reusedMenu(){
-}
-void showTotalPrice(){
+void addTakeOut(takeOut *order, int *counter){
+};
+void addHouseOrder(inHouseOrder *order, int *counter){
+};
+void showTakeOuts(takeOut *order){
+};
+void showHouseOrders(inHouseOrder *order){
+};
+void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption){
+};
+void showTotalPrice(float price1, float price2, float *totalPrice){
+};
 
-}
-
-void mainMenu(){
+void mainMenu(bool *outerCheck){
     //Main Menu.
     //Local variables.
     string userInput;
@@ -83,7 +82,11 @@ void mainMenu(){
                 showHouseOrders(&houseOrder);
                 break;
             case 5:
-                showTotalPrice(&takeOrder, &houseOrder, &totalPrice);
+                showTotalPrice(takeOrder.price, houseOrder.price, &totalPrice);
+                break;
+            case 6:
+                *outerCheck = false;
+                correctPass = false;
                 break;
         }
     }
@@ -124,7 +127,7 @@ void addTakeOut(takeOut *order, int *counter){
 
 void addHouseOrder(inHouseOrder *order, int *counter){
     bool type = true;
-    //Adding orders 'to go'/delivery.
+    //Adding orders in restaurant.
     if(*counter < 1){
         (*order).price = 0;
         cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
@@ -234,13 +237,16 @@ void showHouseOrders(inHouseOrder *order){
     cout << "Metodo de pago: " << (*order).paymentMethod << endl;
 }
 
-void showTotalPrice(takeOut *takeOrder, inHouseOrder *houseOrder, float *totalPrice){
-    *totalPrice = (*takeOrder).price + (*houseOrder).price;
+void showTotalPrice(float price1, float price2, float *totalPrice){
+    *totalPrice = price1 + price2;
     cout << "El precio total es: " << *totalPrice << "$\n";
 }
 
 int main(){
     //Flag used in menu display.
     bool inMenu = true;
-
+    while(inMenu = true){
+        mainMenu(&inMenu);
+    }
+    return 0;
 }
