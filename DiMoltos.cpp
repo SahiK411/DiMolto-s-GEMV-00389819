@@ -23,161 +23,7 @@ struct inHouseOrder{
     string paymentMethod;
 };
 
-//Overloading functions
-void addTakeOut(takeOut *order, int *counter){
-};
-void addHouseOrder(inHouseOrder *order, int *counter){
-};
-void showTakeOuts(takeOut *order){
-};
-void showHouseOrders(inHouseOrder *order){
-};
-void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption){
-};
-void showTotalPrice(float price1, float price2, float *totalPrice){
-};
-
-void mainMenu(bool *outerCheck){
-    //Main Menu.
-    //Local variables.
-    string userInput;
-    bool correctPass = false;
-    int userOption, counterTOrders = 0, counterIHOrders = 0;
-    float totalPrice;
-
-    takeOut takeOrder;
-    inHouseOrder houseOrder;
-
-    //Checking password
-    cout << "Por favor digite la contrasena.\n";
-    getline(cin, userInput);
-    if(userInput == "recursion"){
-        cout << "Contrasena aceptada.\n";
-        correctPass = true;
-    }
-    else{
-        cout << "Contrasena incorrecta.\n";
-    }
-    
-    while(correctPass = true){
-        cout << "Digite el numero de la opcion deseada.\n";
-        cout << "\t1- Agregar un pedido a domicilio." << endl;
-        cout << "\t2- Agregar un encargo en restaurante." << endl;
-        cout << "\t3- Ver pedidos a domicilio." << endl;
-        cout << "\t4- Ver encargos en restaurante." << endl;
-        cout << "\t5- Ver total de venta." << endl;
-        cout << "\t6- Salir." << endl;
-        cin >> userOption;
-        switch(userOption){
-            case 1:
-                addTakeOut(&takeOrder, &counterTOrders);
-                break;
-            case 2:
-                addHouseOrder(&houseOrder, &counterIHOrders);
-                break;
-            case 3:
-                showTakeOuts(&takeOrder);
-                break;
-            case 4:
-                showHouseOrders(&houseOrder);
-                break;
-            case 5:
-                showTotalPrice(takeOrder.price, houseOrder.price, &totalPrice);
-                break;
-            case 6:
-                *outerCheck = false;
-                correctPass = false;
-                break;
-        }
-    }
-}
-
-void addTakeOut(takeOut *order, int *counter){
-    bool type = true;
-    //Adding orders 'to go'/delivery.
-    if(*counter < 1){
-        (*order).price = 0;
-        cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
-        getline(cin, (*order).clientName);
-        
-        cout << "Por favor digite su direccion.\n";
-        getline(cin, (*order).clientAddress);
-
-        cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
-        getline(cin, (*order).clientPhoneNumber);
-
-        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order).price, &(*order).mainDish);
-        type = false;
-
-        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order).price, &(*order).appetizer, type);
-        type = true;
-
-        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order).price, &(*order).drink, type);
-
-        cout << "Su total es: " << (*order).price << endl;
-        cout << "Por medio de que se realizara el pago?\n";
-        getline(cin, (*order).paymentMethod);
-
-        *counter++;
-    }
-    else{
-        cout << "En este momento el servidor no puede almacenar mas de una orden. Gracias por su comprension.\n";
-    }
-}
-
-void addHouseOrder(inHouseOrder *order, int *counter){
-    bool type = true;
-    //Adding orders in restaurant.
-    if(*counter < 1){
-        (*order).price = 0;
-        cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
-        getline(cin, (*order).clientName);
-        
-        cout << "Por favor indique el numero de personas en la mesa.\n";
-        cin >> (*order).clientsPerTable;
-
-        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order).price, &(*order).mainDish);
-        type = false;
-
-        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order).price, &(*order).appetizer, type);
-        type = true;
-
-        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order).price, &(*order).drink, type);
-
-        cout << "Su total es: " << (*order).price << endl;
-        cout << "Por medio de que se realizara el pago?\n";
-        getline(cin, (*order).paymentMethod);
-
-        *counter++;
-    }
-    else{
-        cout << "En este momento el servidor no puede almacenar mas de una orden. Gracias por su comprension.\n";
-    }
-}
-
-void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption){
-    int userInput;
-    cout << "Por favor escoga su plato principal de entre las siguientes opciones, escribiendo el numero que se les antepone: \n";
-    cout << option1 << endl << option2 << endl << option3 << endl;
-    cin >> userInput;
-    switch(userInput){
-        case 1:
-            *price += 6.99;
-            *chosenOption = "Pizza";
-            break;
-        case 2:
-            *price += 9.99;
-            *chosenOption = "Pasta";
-            break;
-        case 3:
-            *price += 8.99;
-            *chosenOption = "Ensalada";
-            break;
-        default:
-            cout << "error";
-            break;
-    }
-}
+//Declaring functions
 
 void reusedMenu(string option1, string option2, float *price, string *chosenOption, bool type){
     int userInput;
@@ -216,6 +62,99 @@ void reusedMenu(string option1, string option2, float *price, string *chosenOpti
     }
 }
 
+void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption){
+    int userInput;
+    cout << "Por favor escoga su plato principal de entre las siguientes opciones, escribiendo el numero que se les antepone: \n";
+    cout << option1 << endl << option2 << endl << option3 << endl;
+    cin >> userInput;
+    switch(userInput){
+        case 1:
+            *price += 6.99;
+            *chosenOption = "Pizza";
+            break;
+        case 2:
+            *price += 9.99;
+            *chosenOption = "Pasta";
+            break;
+        case 3:
+            *price += 8.99;
+            *chosenOption = "Ensalada";
+            break;
+        default:
+            cout << "error";
+            break;
+    }
+}
+
+void addTakeOut(takeOut *order, int *counter){
+    bool type = true;
+    //Adding orders 'to go'/delivery.
+    if(*counter < 1){
+        (*order).price = 0;
+        cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
+        cin.ignore();
+        getline(cin, (*order).clientName);
+        
+        cout << "Por favor digite su direccion.\n";
+        cin.ignore();
+        getline(cin, (*order).clientAddress);
+
+        cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
+        cin.ignore();
+        getline(cin, (*order).clientPhoneNumber);
+
+        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order).price, &(*order).mainDish);
+        type = false;
+
+        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order).price, &(*order).appetizer, type);
+        type = true;
+
+        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order).price, &(*order).drink, type);
+
+        cout << "Su total es: " << (*order).price << endl;
+        cout << "Por medio de que se realizara el pago?\n";
+        cin.ignore();
+        getline(cin, (*order).paymentMethod);
+
+        *counter++;
+    }
+    else{
+        cout << "En este momento el servidor no puede almacenar mas de una orden. Gracias por su comprension.\n";
+    }
+}
+
+void addHouseOrder(inHouseOrder *order, int *counter){
+    bool type = true;
+    //Adding orders in restaurant.
+    if(*counter < 1){
+        (*order).price = 0;
+        cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
+        cin.ignore();
+        getline(cin, (*order).clientName);
+        
+        cout << "Por favor indique el numero de personas en la mesa.\n";
+        cin >> (*order).clientsPerTable;
+
+        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order).price, &(*order).mainDish);
+        type = false;
+
+        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order).price, &(*order).appetizer, type);
+        type = true;
+
+        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order).price, &(*order).drink, type);
+
+        cout << "Su total es: " << (*order).price << endl;
+        cout << "Por medio de que se realizara el pago?\n";
+        cin.ignore();
+        getline(cin, (*order).paymentMethod);
+
+        *counter++;
+    }
+    else{
+        cout << "En este momento el servidor no puede almacenar mas de una orden. Gracias por su comprension.\n";
+    }
+}
+
 void showTakeOuts(takeOut *order){
     cout << "Nombre del cliente: " << (*order).clientName << endl;
     cout << "Direccion del cliente: " << (*order).clientAddress << endl;
@@ -242,10 +181,67 @@ void showTotalPrice(float price1, float price2, float *totalPrice){
     cout << "El precio total es: " << *totalPrice << "$\n";
 }
 
+void mainMenu(bool *outerCheck){
+    //Main Menu.
+    //Local variables.
+    string userInput;
+    bool correctPass = false;
+    int userOption, counterTOrders = 0, counterIHOrders = 0;
+    float totalPrice;
+
+    takeOut takeOrder;
+    takeOrder.price = 0;
+    inHouseOrder houseOrder;
+    houseOrder.price = 0;
+
+    //Checking password
+    cout << "Por favor digite la contrasena.\n";
+    getline(cin, userInput);
+    if(userInput == "recursion"){
+        cout << "Contrasena aceptada.\n";
+        correctPass = true;
+    }
+    else{
+        cout << "Contrasena incorrecta.\n";
+    }
+    
+    while(correctPass == true){
+        cout << "Digite el numero de la opcion deseada.\n";
+        cout << "\t1- Agregar un pedido a domicilio." << endl;
+        cout << "\t2- Agregar un encargo en restaurante." << endl;
+        cout << "\t3- Ver pedidos a domicilio." << endl;
+        cout << "\t4- Ver encargos en restaurante." << endl;
+        cout << "\t5- Ver total de venta." << endl;
+        cout << "\t6- Salir." << endl;
+        cin >> userOption;
+        switch(userOption){
+            case 1:
+                addTakeOut(&takeOrder, &counterTOrders);
+                break;
+            case 2:
+                addHouseOrder(&houseOrder, &counterIHOrders);
+                break;
+            case 3:
+                showTakeOuts(&takeOrder);
+                break;
+            case 4:
+                showHouseOrders(&houseOrder);
+                break;
+            case 5:
+                showTotalPrice(takeOrder.price, houseOrder.price, &totalPrice);
+                break;
+            case 6:
+                *outerCheck = false;
+                correctPass = false;
+                break;
+        }
+    }
+}
+
 int main(){
     //Flag used in menu display.
     bool inMenu = true;
-    while(inMenu = true){
+    while(inMenu == true){
         mainMenu(&inMenu);
     }
     return 0;
