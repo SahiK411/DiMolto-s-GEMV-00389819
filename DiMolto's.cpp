@@ -122,6 +122,36 @@ void addTakeOut(takeOut *order, int *counter){
     }
 }
 
+void addHouseOrder(inHouseOrder *order, int *counter){
+    bool type = true;
+    //Adding orders 'to go'/delivery.
+    if(*counter < 1){
+        (*order).price = 0;
+        cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
+        getline(cin, (*order).clientName);
+        
+        cout << "Por favor indique el numero de personas en la mesa.\n";
+        cin >> (*order).clientsPerTable;
+
+        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order).price, &(*order).mainDish);
+        type = false;
+
+        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order).price, &(*order).appetizer, type);
+        type = true;
+
+        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order).price, &(*order).drink, type);
+
+        cout << "Su total es: " << (*order).price << endl;
+        cout << "Por medio de que se realizara el pago?\n";
+        getline(cin, (*order).paymentMethod);
+
+        *counter++;
+    }
+    else{
+        cout << "En este momento el servidor no puede almacenar mas de una orden. Gracias por su comprension.\n";
+    }
+}
+
 
 
 int main(){
