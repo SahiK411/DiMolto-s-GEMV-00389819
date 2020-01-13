@@ -152,6 +152,67 @@ void addHouseOrder(inHouseOrder *order, int *counter){
     }
 }
 
+void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption){
+    int userInput;
+    cout << "Por favor escoga su plato principal de entre las siguientes opciones, escribiendo el numero que se les antepone: \n";
+    cout << option1 << endl << option2 << endl << option3 << endl;
+    cin >> userInput;
+    switch(userInput){
+        case 1:
+            *price += 6.99;
+            *chosenOption = "Pizza";
+            break;
+        case 2:
+            *price += 9.99;
+            *chosenOption = "Pasta";
+            break;
+        case 3:
+            *price += 8.99;
+            *chosenOption = "Ensalada";
+            break;
+        default:
+            cout << "error";
+            break;
+    }
+}
+
+void reusedMenu(string option1, string option2, float *price, string *chosenOption, bool type){
+    int userInput;
+    cout << "Por favor escoga de entre las siguientes opciones, escribiendo el numero que se les antepone: \n";
+    cout << option1 << endl << option2 << endl;
+    cin >> userInput;
+    if(type == true){
+        switch(userInput){
+            case 1:
+                *price += 0.99;
+                *chosenOption = "Gaseosa";
+                break;
+            case 2:
+                *price += 1.99;
+                *chosenOption = "Te";
+                break;
+            default:
+                cout << "error";
+                break;
+        }
+    }
+    else{
+        switch(userInput){
+            case 1:
+                *price += 3.99;
+                *chosenOption = "Palitroques";
+                break;
+            case 2:
+                *price += 2.99;
+                *chosenOption = "Palitos de queso";
+                break;
+            default:
+                cout << "error";
+                break;
+        }
+    }
+}
+
 
 
 int main(){
