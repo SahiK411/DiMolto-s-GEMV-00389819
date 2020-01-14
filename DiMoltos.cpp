@@ -24,18 +24,13 @@ struct inHouseOrder{
 };
 
 //Overloading functions
-void addTakeOut(takeOut *order, int *counter){
-};
-void addHouseOrder(inHouseOrder *order, int *counter){
-};
-void showTakeOuts(takeOut *order){
-};
-void showHouseOrders(inHouseOrder *order){
-};
-void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption){
-};
-void showTotalPrice(float price1, float price2, float *totalPrice){
-};
+void addTakeOut(takeOut *order, int *counter);
+void addHouseOrder(inHouseOrder *order, int *counter);
+void showTakeOuts(takeOut *order);
+void showHouseOrders(inHouseOrder *order);
+void reusedMenu(string option1, string option2, string option3, float *price, string *chosenOption);
+void reusedMenu(string option1, string option2, float *price, string *chosenOption, bool type);
+void showTotalPrice(float price1, float price2, float *totalPrice);
 
 void mainMenu(bool *outerCheck){
     //Main Menu.
@@ -46,7 +41,9 @@ void mainMenu(bool *outerCheck){
     float totalPrice;
 
     takeOut takeOrder;
+    takeOrder.price = 0;
     inHouseOrder houseOrder;
+    houseOrder.price = 0;
 
     //Checking password
     cout << "Por favor digite la contrasena.\n";
@@ -59,7 +56,7 @@ void mainMenu(bool *outerCheck){
         cout << "Contrasena incorrecta.\n";
     }
     
-    while(correctPass = true){
+    while(correctPass == true){
         cout << "Digite el numero de la opcion deseada.\n";
         cout << "\t1- Agregar un pedido a domicilio." << endl;
         cout << "\t2- Agregar un encargo en restaurante." << endl;
@@ -98,12 +95,15 @@ void addTakeOut(takeOut *order, int *counter){
     if(*counter < 1){
         (*order).price = 0;
         cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
+        cin.ignore();
         getline(cin, (*order).clientName);
         
         cout << "Por favor digite su direccion.\n";
+        cin.ignore();
         getline(cin, (*order).clientAddress);
 
         cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
+        cin.ignore();
         getline(cin, (*order).clientPhoneNumber);
 
         reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order).price, &(*order).mainDish);
@@ -116,6 +116,7 @@ void addTakeOut(takeOut *order, int *counter){
 
         cout << "Su total es: " << (*order).price << endl;
         cout << "Por medio de que se realizara el pago?\n";
+        cin.ignore();
         getline(cin, (*order).paymentMethod);
 
         *counter++;
@@ -131,6 +132,7 @@ void addHouseOrder(inHouseOrder *order, int *counter){
     if(*counter < 1){
         (*order).price = 0;
         cout << "Por favor digite su nombre. Solo el primer nombre es necesario.\n";
+        cin.ignore();
         getline(cin, (*order).clientName);
         
         cout << "Por favor indique el numero de personas en la mesa.\n";
@@ -146,6 +148,7 @@ void addHouseOrder(inHouseOrder *order, int *counter){
 
         cout << "Su total es: " << (*order).price << endl;
         cout << "Por medio de que se realizara el pago?\n";
+        cin.ignore();
         getline(cin, (*order).paymentMethod);
 
         *counter++;
@@ -245,7 +248,7 @@ void showTotalPrice(float price1, float price2, float *totalPrice){
 int main(){
     //Flag used in menu display.
     bool inMenu = true;
-    while(inMenu = true){
+    while(inMenu == true){
         mainMenu(&inMenu);
     }
     return 0;
