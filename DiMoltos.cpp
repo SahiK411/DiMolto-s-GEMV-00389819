@@ -2,6 +2,20 @@
 using namespace std;
 
 //Structs
+struct address{
+    string houseNumber;
+    string neighborhood;
+    string county;
+    string state;
+};
+
+struct name{
+    string firstName;
+    string middleName;
+    string surName;
+    string lastName;
+};
+
 struct takeOut{
     int id;
     name clientName;
@@ -25,19 +39,6 @@ struct inHouseOrder{
     string paymentMethod;
 };
 
-struct address{
-    string houseNumber;
-    string neighborhood;
-    string county;
-    string state;
-};
-
-struct name{
-    string firstName;
-    string middleName;
-    string surName;
-    string lastName;
-};
 
 //Prototyping functions
 void addTakeOut(takeOut *order[], int *counter);
@@ -57,7 +58,7 @@ void mainMenu(bool *outerCheck, int *sizeTOrders, int *sizeHOrders){
     //Local variables.
     string userInput;
     bool correctPass = false, administrator = false;
-    int userOption, sizeTOrders = 0, sizeHOrders = 0, temp = 0;
+    int userOption, temp = 0;
     float totalPrice;
 
     takeOut *takeOrder;
@@ -150,6 +151,7 @@ void mainMenu(bool *outerCheck, int *sizeTOrders, int *sizeHOrders){
                 showHouseOrders(&houseOrder, *sizeHOrders);
                 break;
             case 5:
+                totalPrice = 0;
                 showTotalPrice(&takeOrder, &houseOrder, &totalPrice, *sizeTOrders, *sizeHOrders);
                 break;
             case 6:
@@ -181,63 +183,58 @@ void mainMenu(bool *outerCheck, int *sizeTOrders, int *sizeHOrders){
 }
 
 void addTakeOut(takeOut *order[], int *counter){
-    bool type = true;
+    bool type = true, added = false;
     int currentOrder = 0;
     cout << "Que numero de orden es esta? (Solo cuente aquellas ordenes que se introducen en esta sesion y en esta categoria.)\n";
     cin >> currentOrder;
+    cin.ignore();
     //Adding orders 'to go'/delivery.
     for (int i = 0; i < *counter; i++){
-     if((*order)[i].id == 1000 + currentOrder){
-        (*order)[i].price = 0;
-        cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientName.firstName);
+        if((*order)[i].id == 1000 + currentOrder && (*order)[i].clientName.firstName == ""){
+            (*order)[i].price = 0;
+            cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
+            getline(cin, (*order)[i].clientName.firstName);
 
-        cout << "Ingrese el segundo nombre.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientName.middleName);
+            cout << "Ingrese el segundo nombre.\n";
+            getline(cin, (*order)[i].clientName.middleName);
 
-        cout << "Ingrese el primer apellido.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientName.surName);
+            cout << "Ingrese el primer apellido.\n";
+            getline(cin, (*order)[i].clientName.surName);
 
-        cout << "Ingrese el segundo apellido.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientName.lastName);
-        
-        cout << "Por favor digite su direccion.\n Ingrese el numero de casa.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientAddress.houseNumber);
+            cout << "Ingrese el segundo apellido.\n";
+            getline(cin, (*order)[i].clientName.lastName);
+            
+            cout << "Por favor digite su direccion.\n Ingrese el numero de casa.\n";
+            getline(cin, (*order)[i].clientAddress.houseNumber);
 
-        cout << "Ingrese la colonia.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientAddress.neighborhood);
+            cout << "Ingrese la colonia.\n";
+            getline(cin, (*order)[i].clientAddress.neighborhood);
 
-        cout << "Ingrese el municipio.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientAddress.county);
+            cout << "Ingrese el municipio.\n";
+            getline(cin, (*order)[i].clientAddress.county);
 
-        cout << "Ingrese el departamento.\n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientAddress.state);
+            cout << "Ingrese el departamento.\n";
+            getline(cin, (*order)[i].clientAddress.state);
 
-        cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
-        cin.ignore();
-        getline(cin, (*order)[i].clientPhoneNumber);
+            cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
+            getline(cin, (*order)[i].clientPhoneNumber);
 
-        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order)[i].price, &(*order)[i].mainDish);
-        type = false;
+            reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*order)[i].price, &(*order)[i].mainDish);
+            type = false;
 
-        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order)[i].price, &(*order)[i].appetizer, type);
-        type = true;
+            reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*order)[i].price, &(*order)[i].appetizer, type);
+            type = true;
 
-        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order)[i].price, &(*order)[i].drink, type);
+            reusedMenu("\t1- Gaseosa", "\t2- Te", &(*order)[i].price, &(*order)[i].drink, type);
 
-        cout << "Su total es: " << (*order)[i].price << endl;
-        cout << "Por medio de que se realizara el pago?\n";
-        cin.ignore();
-        getline(cin, (*order)[i].paymentMethod);
-    }
+            cout << "Su total es: " << (*order)[i].price << endl;
+            cout << "Por medio de que se realizara el pago?\n";
+            cin.ignore();
+            getline(cin, (*order)[i].paymentMethod);
+            added = true;
+        }
+    else if(added == true){
+        }
     else{
         cout << "Este numero de orden no es admitido dentro de esta sesion.\n";
     }   
@@ -245,28 +242,25 @@ void addTakeOut(takeOut *order[], int *counter){
 }
         
 void addHouseOrder(inHouseOrder *order[], int *counter){
-    bool type = true;
+    bool type = true, added = false;
     int currentOrder;
     cout << "Que numero de orden es esta? (Solo cuente aquellas ordenes que se introducen en esta sesion y en esta categoria.)\n";
     cin >> currentOrder;
+    cin.ignore();
     //Adding orders in restaurant.
     for (int i = 0; i < *counter; i++){
-        if((*order)[i].id == 1000 + currentOrder){
+        if((*order)[i].id == 1000 + currentOrder && (*order)[i].clientName.firstName == ""){
             (*order)[i].price = 0;
             cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
-            cin.ignore();
             getline(cin, (*order)[i].clientName.firstName);
 
             cout << "Ingrese el segundo nombre.\n";
-            cin.ignore();
             getline(cin, (*order)[i].clientName.middleName);
 
             cout << "Ingrese el primer apellido.\n";
-            cin.ignore();
             getline(cin, (*order)[i].clientName.surName);
 
             cout << "Ingrese el segundo apellido.\n";
-            cin.ignore();
             getline(cin, (*order)[i].clientName.lastName);
             
             cout << "Por favor indique el numero de personas en la mesa.\n";
@@ -283,7 +277,10 @@ void addHouseOrder(inHouseOrder *order[], int *counter){
             cout << "Su total es: " << (*order)[i].price << endl;
             cout << "Por medio de que se realizara el pago?\n";
             cin.ignore();
-            getline(cin, (*order)[i].paymentMethod);    
+            getline(cin, (*order)[i].paymentMethod);
+            added = true;    
+        }
+        else if(added == true){
         }
         else{
             cout << "Este numero de orden no es admitido dentro de esta sesion.\n";
@@ -401,94 +398,92 @@ void showTotalPrice(takeOut *price1[], inHouseOrder *price2[], float *totalPrice
 void searchByName(takeOut *searched[], int size){
     //Function to find order by first name, last name
     string searchedName, searchedLast;
-    bool type = true;
+    bool type = true, found = false;
     int temp = 0, userInput;
     cout << "Ingrese el primer nombre de la orden que desea encontrar.\n";
     getline(cin, searchedName);
-    cin.ignore();
     cout << "Ingrese el ultimo apellido de la orden que desea encontrar.\n";
     getline(cin, searchedLast);
 
     for(int i = 0; i < size; i++){
         if(searchedName == (*searched)[i].clientName.firstName && searchedLast == (*searched)[i].clientName.lastName){
+            found = true;
             cout << "Orden encontrada! El identificador de la orden es: " << (*searched)[i].id << " .\n";
             cout << "Desea cambiar algo?\n 1- Si\t 2- No\n";
-            cin.ignore();
             cin >> userInput;
             if(userInput == 1){
-                cout << "Digite el numero de la opcion deseada.\n";
-                cout << "\t1- Nombre." << endl;
-                cout << "\t2- Direccion." << endl;
-                cout << "\t3- Numero de telefono." << endl;
-                cout << "\t4- Orden." << endl;
-                cout << "\t5- Metodo de pago." << endl;
-                cout << "\t6- Regresar." << endl;
-                cin.ignore();
-                cin >> temp;
-                switch(temp){
-                    case 1:
-                        cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.firstName);
+                while(temp != 6){
+                    cout << "Digite el numero de la opcion deseada.\n";
+                    cout << "\t1- Nombre." << endl;
+                    cout << "\t2- Direccion." << endl;
+                    cout << "\t3- Numero de telefono." << endl;
+                    cout << "\t4- Orden." << endl;
+                    cout << "\t5- Metodo de pago." << endl;
+                    cout << "\t6- Regresar." << endl;
+                    cin >> temp;
+                    switch(temp){
+                        case 1:
+                            cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
+                            cin.ignore();
+                            getline(cin, (*searched)[i].clientName.firstName);
 
-                        cout << "Ingrese el segundo nombre.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.middleName);
+                            cout << "Ingrese el segundo nombre.\n";
+                            getline(cin, (*searched)[i].clientName.middleName);
 
-                        cout << "Ingrese el primer apellido.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.surName);
+                            cout << "Ingrese el primer apellido.\n";
+                            getline(cin, (*searched)[i].clientName.surName);
 
-                        cout << "Ingrese el segundo apellido.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.lastName);
-                        break;
-                    case 2:
-                        cout << "Por favor digite su direccion.\n Ingrese el numero de casa.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientAddress.houseNumber);
+                            cout << "Ingrese el segundo apellido.\n";
+                            getline(cin, (*searched)[i].clientName.lastName);
+                            break;
+                        case 2:
+                            cout << "Por favor digite su direccion.\n Ingrese el numero de casa.\n";
+                            cin.ignore();
+                            getline(cin, (*searched)[i].clientAddress.houseNumber);
 
-                        cout << "Ingrese la colonia.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientAddress.neighborhood);
+                            cout << "Ingrese la colonia.\n";
+                            getline(cin, (*searched)[i].clientAddress.neighborhood);
 
-                        cout << "Ingrese el municipio.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientAddress.county);
+                            cout << "Ingrese el municipio.\n";
+                            getline(cin, (*searched)[i].clientAddress.county);
 
-                        cout << "Ingrese el departamento.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientAddress.state);
-                        break;
-                    case 3:
-                        cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientPhoneNumber);
-                        break;
-                    case 4:
-                        (*searched)[i].price = 0;
-                        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*searched)[i].price, &(*searched)[i].mainDish);
-                        type = false;
+                            cout << "Ingrese el departamento.\n";
+                            getline(cin, (*searched)[i].clientAddress.state);
+                            break;
+                        case 3:
+                            cout << "Por favor digite su numero de telefono, con el formato XXXX-XXXX: \n";
+                            cin.ignore();
+                            getline(cin, (*searched)[i].clientPhoneNumber);
+                            break;
+                        case 4:
+                            (*searched)[i].price = 0;
+                            reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*searched)[i].price, &(*searched)[i].mainDish);
+                            type = false;
 
-                        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*searched)[i].price, &(*searched)[i].appetizer, type);
-                        type = true;
+                            reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*searched)[i].price, &(*searched)[i].appetizer, type);
+                            type = true;
 
-                        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*searched)[i].price, &(*searched)[i].drink, type);
-                        break;
-                    case 5:
-                        cout << "Por medio de que se realizara el pago?\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].paymentMethod);
-                        break;
-                    case 6:
-                        break;
-                    default:
-                        cout << "error" << endl;
-                        break;
+                            reusedMenu("\t1- Gaseosa", "\t2- Te", &(*searched)[i].price, &(*searched)[i].drink, type);
+                            break;
+                        case 5:
+                            cout << "Por medio de que se realizara el pago?\n";
+                            cin.ignore();
+                            getline(cin, (*searched)[i].paymentMethod);
+                            break;
+                        case 6:
+                            cin.ignore();
+                            break;
+                        default:
+                            cout << "error" << endl;
+                            break;
+                    }
                 }
             }
             else{}
         }
+    }
+    if(found == false){
+        cout << "No se encontro esa orden.\n";
     }
 }
 
@@ -499,7 +494,6 @@ void searchByName(inHouseOrder *searched[], int size){
     int temp = 0, userInput;
     cout << "Ingrese el primer nombre de la orden que desea encontrar.\n";
     getline(cin, searchedName);
-    cin.ignore();
     cout << "Ingrese el ultimo apellido de la orden que desea encontrar.\n";
     getline(cin, searchedLast);
 
@@ -507,60 +501,58 @@ void searchByName(inHouseOrder *searched[], int size){
         if(searchedName == (*searched)[i].clientName.firstName && searchedLast == (*searched)[i].clientName.lastName){
             cout << "Orden encontrada! El identificador de la orden es: " << (*searched)[i].id << " .\n";
             cout << "Desea cambiar algo?\n 1- Si\t 2- No\n";
-            cin.ignore();
             cin >> userInput;
             if(userInput == 1){
-                cout << "Digite el numero de la opcion deseada.\n";
-                cout << "\t1- Nombre." << endl;
-                cout << "\t2- Numero de clientes en la mesa." << endl;
-                cout << "\t3- Orden." << endl;
-                cout << "\t4- Metodo de pago." << endl;
-                cout << "\t5- Regresar." << endl;
-                cin.ignore();
-                cin >> temp;
-                switch(temp){
-                    case 1:
-                        cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.firstName);
+                while(temp != 6){
+                    cout << "Digite el numero de la opcion deseada.\n";
+                    cout << "\t1- Nombre." << endl;
+                    cout << "\t2- Numero de clientes en la mesa." << endl;
+                    cout << "\t3- Orden." << endl;
+                    cout << "\t4- Metodo de pago." << endl;
+                    cout << "\t5- Regresar." << endl;
+                    cin >> temp;
+                    switch(temp){
+                        case 1:
+                            cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
+                            cin.ignore();
+                            getline(cin, (*searched)[i].clientName.firstName);
 
-                        cout << "Ingrese el segundo nombre.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.middleName);
+                            cout << "Ingrese el segundo nombre.\n";
+                            getline(cin, (*searched)[i].clientName.middleName);
 
-                        cout << "Ingrese el primer apellido.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.surName);
+                            cout << "Ingrese el primer apellido.\n";
+                            getline(cin, (*searched)[i].clientName.surName);
 
-                        cout << "Ingrese el segundo apellido.\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].clientName.lastName);
-                        break;
-                    case 2:
-                        cout << "Por favor digite el numero de clientes en la mesa: \n";
-                        cin.ignore();
-                        cin >> (*searched)[i].clientsPerTable;
-                        break;
-                    case 3:
-                        (*searched)[i].price = 0;
-                        reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*searched)[i].price, &(*searched)[i].mainDish);
-                        type = false;
+                            cout << "Ingrese el segundo apellido.\n";
+                            getline(cin, (*searched)[i].clientName.lastName);
+                            break;
+                        case 2:
+                            cout << "Por favor digite el numero de clientes en la mesa: \n";
+                            cin.ignore();
+                            cin >> (*searched)[i].clientsPerTable;
+                            break;
+                        case 3:
+                            (*searched)[i].price = 0;
+                            reusedMenu("\t1- Pizza", "\t2- Pasta", "\t3- Ensalada", &(*searched)[i].price, &(*searched)[i].mainDish);
+                            type = false;
 
-                        reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*searched)[i].price, &(*searched)[i].appetizer, type);
-                        type = true;
+                            reusedMenu("\t1- Palitroques", "\t2- Palitos de Queso", &(*searched)[i].price, &(*searched)[i].appetizer, type);
+                            type = true;
 
-                        reusedMenu("\t1- Gaseosa", "\t2- Te", &(*searched)[i].price, &(*searched)[i].drink, type);
-                        break;
-                    case 4:
-                        cout << "Por medio de que se realizara el pago?\n";
-                        cin.ignore();
-                        getline(cin, (*searched)[i].paymentMethod);
-                        break;
-                    case 5:
-                        break;
-                    default:
-                        cout << "error" << endl;
-                        break;
+                            reusedMenu("\t1- Gaseosa", "\t2- Te", &(*searched)[i].price, &(*searched)[i].drink, type);
+                            break;
+                        case 4:
+                            cout << "Por medio de que se realizara el pago?\n";
+                            cin.ignore();
+                            getline(cin, (*searched)[i].paymentMethod);
+                            break;
+                        case 5:
+                            cin.ignore();
+                            break;
+                        default:
+                            cout << "error" << endl;
+                            break;
+                    }
                 }
             }
             else{}
@@ -578,7 +570,6 @@ void deleteOrder(takeOut *searched[], int size){
         if((*searched)[i].id == userID){
             found = true;
             cout << "Esta seguro que desea borrar esta orden?\n 1- Si\t 2- No\n";
-            cin.ignore;
             cin >> confirmation;
             if(confirmation == 1){
                 (*searched)[i].clientName.firstName = "";
@@ -595,8 +586,11 @@ void deleteOrder(takeOut *searched[], int size){
                 (*searched)[i].drink = "";
                 (*searched)[i].price = 0;
                 (*searched)[i].paymentMethod = "";
+                cin.ignore();
             }
-            else{}
+            else{
+                cin.ignore();
+            }
         }
     }
     if(found == false){
@@ -614,7 +608,6 @@ void deleteOrder(inHouseOrder *searched[], int size){
         if((*searched)[i].id == userID){
             found = true;
             cout << "Esta seguro que desea borrar esta orden?\n 1- Si\t 2- No\n";
-            cin.ignore;
             cin >> confirmation;
             if(confirmation == 1){
                 (*searched)[i].clientName.firstName = "";
