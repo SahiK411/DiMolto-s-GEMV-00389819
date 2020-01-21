@@ -399,6 +399,74 @@ void showTotalPrice(takeOut *price1[], inHouseOrder *price2[], float *totalPrice
 }
 
 
+void deleteOrder(takeOut *searched[], int size){
+    //Function to delete orders
+    int userID, confirmation;
+    bool found = false;
+    cout << "Por favor ingrese el identificador de la orden.\n";
+    cin >> userID;
+    for(int i = 0; i < size; i++){
+        if((*searched)[i].id == userID){
+            found = true;
+            cout << "Esta seguro que desea borrar esta orden?\n 1- Si\t 2- No\n";
+            cin.ignore;
+            cin >> confirmation;
+            if(confirmation == 1){
+                (*searched)[i].clientName.firstName = "";
+                (*searched)[i].clientName.middleName = "";
+                (*searched)[i].clientName.surName = "";
+                (*searched)[i].clientName.lastName = "";
+                (*searched)[i].clientPhoneNumber = "";
+                (*searched)[i].clientAddress.houseNumber = "";
+                (*searched)[i].clientAddress.neighborhood = "";
+                (*searched)[i].clientAddress.county = "";
+                (*searched)[i].clientAddress.state = "";
+                (*searched)[i].appetizer = "";
+                (*searched)[i].mainDish = "";
+                (*searched)[i].drink = "";
+                (*searched)[i].price = 0;
+                (*searched)[i].paymentMethod = "";
+            }
+            else{}
+        }
+    }
+    if(found == false){
+        cout << "No se encontro la orden.\n";
+    }
+}
+
+void deleteOrder(inHouseOrder *searched[], int size){
+    //Function to delete orders
+    int userID, confirmation;
+    bool found = false;
+    cout << "Por favor ingrese el identificador de la orden.\n";
+    cin >> userID;
+    for(int i = 0; i < size; i++){
+        if((*searched)[i].id == userID){
+            found = true;
+            cout << "Esta seguro que desea borrar esta orden?\n 1- Si\t 2- No\n";
+            cin.ignore;
+            cin >> confirmation;
+            if(confirmation == 1){
+                (*searched)[i].clientName.firstName = "";
+                (*searched)[i].clientName.middleName = "";
+                (*searched)[i].clientName.surName = "";
+                (*searched)[i].clientName.lastName = "";
+                (*searched)[i].clientsPerTable = 0;
+                (*searched)[i].appetizer = "";
+                (*searched)[i].mainDish = "";
+                (*searched)[i].drink = "";
+                (*searched)[i].price = 0;
+                (*searched)[i].paymentMethod = "";
+            }
+            else{}
+        }
+    }
+    if(found == false){
+        cout << "No se encontro la orden.\n";
+    }
+}
+
 int main(){
     //Flag used in menu display.
     bool inMenu = true;
