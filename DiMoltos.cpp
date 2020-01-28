@@ -72,6 +72,14 @@ void searchByNameTake();
 void searchByNameHouse();
 void deleteOrderTakeOut();
 void deleteOrderHouse();
+void menuAppe(takeOut* auxOrder);
+void menuAppe(inHouseOrder* auxOrder);
+void menuDish(takeOut* auxOrder);
+void menuDish(inHouseOrder* auxOrder);
+void menuDrink(takeOut* auxOrder);
+void menuDrink(inHouseOrder* auxOrder);
+void dispatchTakeOut();
+void dispatchHouse();
 
 void mainMenu(bool *outerCheck){
     //Main Menu.
@@ -181,9 +189,6 @@ void addTakeOut(){
     takeOut auxOrder;
     int aux;
     bool cont = true;
-    mainDish auxDish;
-    appetizer auxAppe;
-    drink auxDrink;
     //Adding orders 'to go'/delivery.
     auxOrder.price = 0;
     cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
@@ -215,33 +220,7 @@ void addTakeOut(){
 
     do{
         cont = true;
-        cout << "Entrada\n";
-        cout << "\t1. Palitroque\n";
-        cout << "\t2. Pan con ajo\n";
-        cout << "\t3. Palitos de queso\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1: 
-                auxAppe = appetizer::pizzaRolls;
-                auxOrder.price += 3.99;
-                auxOrder.orderAppe.insert(auxOrder.orderAppe.end(), auxAppe);
-                break;
-            case 2:
-                auxAppe = appetizer::garlicBread;
-                auxOrder.price += 2.99;
-                auxOrder.orderAppe.insert(auxOrder.orderAppe.end(), auxAppe);
-                break;
-            case 3:
-                auxAppe = appetizer::cheeseSticks;
-                auxOrder.price += 3.99;
-                auxOrder.orderAppe.insert(auxOrder.orderAppe.end(), auxAppe);
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+        menuAppe(&auxOrder);
         cout << "Continuar?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
@@ -250,33 +229,7 @@ void addTakeOut(){
     }while(cont);
     do{
         cont = true;
-        cout << "Plato principal\n";
-        cout << "\t1. Pizza\n";
-        cout << "\t2. Pasta\n";
-        cout << "\t3. Lasagna\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1:
-                auxDish = mainDish::pizza;
-                auxOrder.price += 6.99;
-                auxOrder.orderDish.insert(auxOrder.orderDish.end(), auxDish);
-                break;
-            case 2:
-                auxDish = mainDish::pasta;
-                auxOrder.price += 9.99;
-                auxOrder.orderDish.insert(auxOrder.orderDish.end(), auxDish);
-                break;
-            case 3:
-                auxDish = mainDish::lasagna;
-                auxOrder.price += 8.99;
-                auxOrder.orderDish.insert(auxOrder.orderDish.end(), auxDish);
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+        menuDish(&auxOrder);
         cout << "Continuar?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
@@ -284,33 +237,8 @@ void addTakeOut(){
         }
     }while(cont);
     do{
-        cout << "Bebida\n";
-        cout << "\t1. Cerveza\n";
-        cout << "\t2. Te\n";
-        cout << "\t3. Soda\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1:
-                auxDrink = drink::beer;
-                auxOrder.price += 2.50;
-                auxOrder.orderDrink.insert(auxOrder.orderDrink.end(), auxDrink);
-                break;
-            case 2:
-                auxDrink = drink::tea;
-                auxOrder.price += 1.99;
-                auxOrder.orderDrink.insert(auxOrder.orderDrink.end(), auxDrink);
-                break;
-            case 3:
-                auxDrink = drink::soda;
-                auxOrder.price += 0.99;
-                auxOrder.orderDrink.insert(auxOrder.orderDrink.end(), auxDrink);
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+        cont = true;
+        menuDrink(&auxOrder);
         cout << "Continuar?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
@@ -367,33 +295,7 @@ void addHouseOrder(){
 
     do{
         cont = true;
-        cout << "Entrada\n";
-        cout << "\t1. Palitroque\n";
-        cout << "\t2. Pan con ajo\n";
-        cout << "\t3. Palitos de queso\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1: 
-                auxAppe = appetizer::pizzaRolls;
-                auxOrder.price += 3.99;
-                auxOrder.orderAppe.insert(auxOrder.orderAppe.end(), auxAppe);
-                break;
-            case 2:
-                auxAppe = appetizer::garlicBread;
-                auxOrder.price += 2.99;
-                auxOrder.orderAppe.insert(auxOrder.orderAppe.end(), auxAppe);
-                break;
-            case 3:
-                auxAppe = appetizer::cheeseSticks;
-                auxOrder.price += 3.99;
-                auxOrder.orderAppe.insert(auxOrder.orderAppe.end(), auxAppe);
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+        menuAppe(&auxOrder);
         cout << "Continuar?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
@@ -402,33 +304,7 @@ void addHouseOrder(){
     }while(cont);
     do{
         cont = true;
-        cout << "Plato principal\n";
-        cout << "\t1. Pizza\n";
-        cout << "\t2. Pasta\n";
-        cout << "\t3. Lasagna\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1:
-                auxDish = mainDish::pizza;
-                auxOrder.price += 6.99;
-                auxOrder.orderDish.insert(auxOrder.orderDish.end(), auxDish);
-                break;
-            case 2:
-                auxDish = mainDish::pasta;
-                auxOrder.price += 9.99;
-                auxOrder.orderDish.insert(auxOrder.orderDish.end(), auxDish);
-                break;
-            case 3:
-                auxDish = mainDish::lasagna;
-                auxOrder.price += 8.99;
-                auxOrder.orderDish.insert(auxOrder.orderDish.end(), auxDish);
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+        menuDish(&auxOrder);
         cout << "Continuar?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
@@ -438,33 +314,7 @@ void addHouseOrder(){
 
     do{
         cont = true;
-        cout << "Bebida\n";
-        cout << "\t1. Cerveza\n";
-        cout << "\t2. Te\n";
-        cout << "\t3. Soda\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1:
-                auxDrink = drink::beer;
-                auxOrder.price += 2.50;
-                auxOrder.orderDrink.insert(auxOrder.orderDrink.end(), auxDrink);
-                break;
-            case 2:
-                auxDrink = drink::tea;
-                auxOrder.price += 1.99;
-                auxOrder.orderDrink.insert(auxOrder.orderDrink.end(), auxDrink);
-                break;
-            case 3:
-                auxDrink = drink::soda;
-                auxOrder.price += 0.99;
-                auxOrder.orderDrink.insert(auxOrder.orderDrink.end(), auxDrink);
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+        menuDrink(&auxOrder);
         cout << "Continuar?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
@@ -635,33 +485,7 @@ void searchByNameTake(){
                             takeOrder[i].orderDrink.shrink_to_fit();
                             do{
                                 cont = true;
-                                cout << "Entrada\n";
-                                cout << "\t1. Palitroque\n";
-                                cout << "\t2. Pan con ajo\n";
-                                cout << "\t3. Palitos de queso\n";
-                                cout << "Su opcion: ";
-                                cin >> aux;
-                                cin.ignore();
-                                switch(aux){
-                                    case 1: 
-                                        auxAppe = appetizer::pizzaRolls;
-                                        takeOrder[i].price += 3.99;
-                                        takeOrder[i].orderAppe.insert(takeOrder[i].orderAppe.end(), auxAppe);
-                                        break;
-                                    case 2:
-                                        auxAppe = appetizer::garlicBread;
-                                        takeOrder[i].price += 2.99;
-                                        takeOrder[i].orderAppe.insert(takeOrder[i].orderAppe.end(), auxAppe);
-                                        break;
-                                    case 3:
-                                        auxAppe = appetizer::cheeseSticks;
-                                        takeOrder[i].price += 3.99;
-                                        takeOrder[i].orderAppe.insert(takeOrder[i].orderAppe.end(), auxAppe);
-                                        break;
-                                    default:
-                                        cout << "Por favor escoga una opcion valida.\n";
-                                        break;
-                                }
+                                menuAppe(&(takeOrder[i]));
                                 cout << "Continuar?\n \t1. Si\n \t2. No\n";
                                 cin >> aux;
                                 if(aux == 2){
@@ -670,33 +494,7 @@ void searchByNameTake(){
                             }while(cont);
                             do{
                                 cont = true;
-                                cout << "Plato principal\n";
-                                cout << "\t1. Pizza\n";
-                                cout << "\t2. Pasta\n";
-                                cout << "\t3. Lasagna\n";
-                                cout << "Su opcion: ";
-                                cin >> aux;
-                                cin.ignore();
-                                switch(aux){
-                                    case 1:
-                                        auxDish = mainDish::pizza;
-                                        takeOrder[i].price += 6.99;
-                                        takeOrder[i].orderDish.insert(takeOrder[i].orderDish.end(), auxDish);
-                                        break;
-                                    case 2:
-                                        auxDish = mainDish::pasta;
-                                        takeOrder[i].price += 9.99;
-                                        takeOrder[i].orderDish.insert(takeOrder[i].orderDish.end(), auxDish);
-                                        break;
-                                    case 3:
-                                        auxDish = mainDish::lasagna;
-                                        takeOrder[i].price += 8.99;
-                                        takeOrder[i].orderDish.insert(takeOrder[i].orderDish.end(), auxDish);
-                                        break;
-                                    default:
-                                        cout << "Por favor escoga una opcion valida.\n";
-                                        break;
-                                }
+                                menuDish(&(takeOrder[i]));
                                 cout << "Continuar?\n \t1. Si\n \t2. No\n";
                                 cin >> aux;
                                 if(aux == 2){
@@ -706,33 +504,7 @@ void searchByNameTake(){
 
                             do{
                                 cont = true;
-                                cout << "Bebida\n";
-                                cout << "\t1. Cerveza\n";
-                                cout << "\t2. Te\n";
-                                cout << "\t3. Soda\n";
-                                cout << "Su opcion: ";
-                                cin >> aux;
-                                cin.ignore();
-                                switch(aux){
-                                    case 1:
-                                        auxDrink = drink::beer;
-                                        takeOrder[i].price += 2.50;
-                                        takeOrder[i].orderDrink.insert(takeOrder[i].orderDrink.end(), auxDrink);
-                                        break;
-                                    case 2:
-                                        auxDrink = drink::tea;
-                                        takeOrder[i].price += 1.99;
-                                        takeOrder[i].orderDrink.insert(takeOrder[i].orderDrink.end(), auxDrink);            
-                                        break;
-                                    case 3:
-                                        auxDrink = drink::soda;
-                                        takeOrder[i].price += 0.99;
-                                        takeOrder[i].orderDrink.insert(takeOrder[i].orderDrink.end(), auxDrink);
-                                        break;
-                                    default:
-                                        cout << "Por favor escoga una opcion valida.\n";
-                                        break;
-                                }
+                                menuDrink(&takeOrder[i]);
                                 cout << "Continuar?\n \t1. Si\n \t2. No\n";
                                 cin >> aux;
                                 if(aux == 2){
@@ -835,33 +607,7 @@ void searchByNameHouse(){
                             houseOrder[i].orderDrink.shrink_to_fit();
                             do{
                                 cont = true;
-                                cout << "Entrada\n";
-                                cout << "\t1. Palitroque\n";
-                                cout << "\t2. Pan con ajo\n";
-                                cout << "\t3. Palitos de queso\n";
-                                cout << "Su opcion: ";
-                                cin >> aux;
-                                cin.ignore();
-                                switch(aux){
-                                    case 1: 
-                                        auxAppe = appetizer::pizzaRolls;
-                                        houseOrder[i].price += 3.99;
-                                        houseOrder[i].orderAppe.insert(houseOrder[i].orderAppe.end(), auxAppe);
-                                        break;
-                                    case 2:
-                                        auxAppe = appetizer::garlicBread;
-                                        houseOrder[i].price += 2.99;
-                                        houseOrder[i].orderAppe.insert(houseOrder[i].orderAppe.end(), auxAppe);
-                                        break;
-                                    case 3:
-                                        auxAppe = appetizer::cheeseSticks;
-                                        houseOrder[i].price += 3.99;
-                                        houseOrder[i].orderAppe.insert(houseOrder[i].orderAppe.end(), auxAppe);
-                                        break;
-                                    default:
-                                        cout << "Por favor escoga una opcion valida.\n";
-                                        break;
-                                }
+                                menuAppe(&(houseOrder[i]));
                                 cout << "Continuar?\n \t1. Si\n \t2. No\n";
                                 cin >> aux;
                                 if(aux == 2){
@@ -870,69 +616,16 @@ void searchByNameHouse(){
                             }while(cont);
                             do{
                                 cont = true;
-                                cout << "Plato principal\n";
-                                cout << "\t1. Pizza\n";
-                                cout << "\t2. Pasta\n";
-                                cout << "\t3. Lasagna\n";
-                                cout << "Su opcion: ";
-                                cin >> aux;
-                                cin.ignore();
-                                switch(aux){
-                                    case 1:
-                                        auxDish = mainDish::pizza;
-                                        houseOrder[i].price += 6.99;
-                                        houseOrder[i].orderDish.insert(takeOrder[i].orderDish.end(), auxDish);
-                                        break;
-                                    case 2:
-                                        auxDish = mainDish::pasta;
-                                        houseOrder[i].price += 9.99;
-                                        houseOrder[i].orderDish.insert(takeOrder[i].orderDish.end(), auxDish);
-                                        break;
-                                    case 3:
-                                        auxDish = mainDish::lasagna;
-                                        houseOrder[i].price += 8.99;
-                                        houseOrder[i].orderDish.insert(takeOrder[i].orderDish.end(), auxDish);
-                                        break;
-                                    default:
-                                        cout << "Por favor escoga una opcion valida.\n";
-                                        break;
-                                }
+                                menuDish(&(houseOrder[i]));
                                 cout << "Continuar?\n \t1. Si\n \t2. No\n";
                                 cin >> aux;
                                 if(aux == 2){
                                     cont = false;
                                 }
                             }while(cont);
-
                             do{
                                 cont = true;
-                                cout << "Bebida\n";
-                                cout << "\t1. Cerveza\n";
-                                cout << "\t2. Te\n";
-                                cout << "\t3. Soda\n";
-                                cout << "Su opcion: ";
-                                cin >> aux;
-                                cin.ignore();
-                                switch(aux){
-                                    case 1:
-                                        auxDrink = drink::beer;
-                                        houseOrder[i].price += 2.50;
-                                        houseOrder[i].orderDrink.insert(takeOrder[i].orderDrink.end(), auxDrink);
-                                        break;
-                                    case 2:
-                                        auxDrink = drink::tea;
-                                        houseOrder[i].price += 1.99;
-                                        houseOrder[i].orderDrink.insert(takeOrder[i].orderDrink.end(), auxDrink);            
-                                        break;
-                                    case 3:
-                                        auxDrink = drink::soda;
-                                        houseOrder[i].price += 0.99;
-                                        houseOrder[i].orderDrink.insert(takeOrder[i].orderDrink.end(), auxDrink);
-                                        break;
-                                    default:
-                                        cout << "Por favor escoga una opcion valida.\n";
-                                        break;
-                                }
+                                menuDrink(&(houseOrder[i]));
                                 cout << "Continuar?\n \t1. Si\n \t2. No\n";
                                 cin >> aux;
                                 if(aux == 2){
@@ -1017,6 +710,254 @@ void deleteOrderHouse(){
             cin >> confirmation;
             cin.ignore();
             if(confirmation == 1){
+                for(auto iter = houseOrder.begin(); iter != houseOrder.end(); ++iter){
+                    if(iter->id == userID){
+                        iter = houseOrder.erase(iter);
+                        break;
+                    }
+                }
+            }
+            else{}
+        }
+    }
+    if(found == false){
+        cout << "No se encontro la orden.\n";
+    }
+}
+
+void menuAppe(takeOut* auxOrder){
+    appetizer auxAppe;
+    int aux;
+    cout << "Entrada\n";
+        cout << "\t1. Palitroque\n";
+        cout << "\t2. Pan con ajo\n";
+        cout << "\t3. Palitos de queso\n";
+        cout << "Su opcion: ";
+        cin >> aux;
+        cin.ignore();
+        switch(aux){
+            case 1: 
+                auxAppe = appetizer::pizzaRolls;
+                (*auxOrder).price += 3.99;
+                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+                break;
+            case 2:
+                auxAppe = appetizer::garlicBread;
+                (*auxOrder).price += 2.99;
+                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+                break;
+            case 3:
+                auxAppe = appetizer::cheeseSticks;
+                (*auxOrder).price += 3.99;
+                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+                break;
+            default:
+                cout << "Por favor escoga una opcion valida.\n";
+                break;
+        }
+}
+
+void menuAppe(inHouseOrder* auxOrder){
+    appetizer auxAppe;
+    int aux;
+    cout << "Entrada\n";
+        cout << "\t1. Palitroque\n";
+        cout << "\t2. Pan con ajo\n";
+        cout << "\t3. Palitos de queso\n";
+        cout << "Su opcion: ";
+        cin >> aux;
+        cin.ignore();
+        switch(aux){
+            case 1: 
+                auxAppe = appetizer::pizzaRolls;
+                (*auxOrder).price += 3.99;
+                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+                break;
+            case 2:
+                auxAppe = appetizer::garlicBread;
+                (*auxOrder).price += 2.99;
+                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+                break;
+            case 3:
+                auxAppe = appetizer::cheeseSticks;
+                (*auxOrder).price += 3.99;
+                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+                break;
+            default:
+                cout << "Por favor escoga una opcion valida.\n";
+                break;
+        }
+}
+
+void menuDish(takeOut* auxOrder){
+    mainDish auxDish;
+    int aux;
+    cout << "Plato principal\n";
+    cout << "\t1. Pizza\n";
+    cout << "\t2. Pasta\n";
+    cout << "\t3. Lasagna\n";
+    cout << "Su opcion: ";
+    cin >> aux;
+    cin.ignore();
+    switch(aux){
+        case 1:
+            auxDish = mainDish::pizza;
+            (*auxOrder).price += 6.99;
+            (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
+            break;
+        case 2:
+            auxDish = mainDish::pasta;
+            (*auxOrder).price += 9.99;
+            (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
+            break;
+        case 3:
+            auxDish = mainDish::lasagna;
+            (*auxOrder).price += 8.99;
+            (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
+            break;
+        default:
+            cout << "Por favor escoga una opcion valida.\n";
+            break;
+    }
+}
+
+void menuDish(inHouseOrder* auxOrder){
+    mainDish auxDish;
+    int aux;
+    cout << "Plato principal\n";
+    cout << "\t1. Pizza\n";
+    cout << "\t2. Pasta\n";
+    cout << "\t3. Lasagna\n";
+    cout << "Su opcion: ";
+    cin >> aux;
+    cin.ignore();
+    switch(aux){
+        case 1:
+            auxDish = mainDish::pizza;
+            (*auxOrder).price += 6.99;
+            (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
+            break;
+        case 2:
+            auxDish = mainDish::pasta;
+            (*auxOrder).price += 9.99;
+            (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
+            break;
+        case 3:
+            auxDish = mainDish::lasagna;
+            (*auxOrder).price += 8.99;
+            (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
+            break;
+        default:
+            cout << "Por favor escoga una opcion valida.\n";
+            break;
+    }
+}
+
+void menuDrink(takeOut* auxOrder){
+    drink auxDrink;
+    int aux;
+    cout << "Bebida\n";
+    cout << "\t1. Cerveza\n";
+    cout << "\t2. Te\n";
+    cout << "\t3. Soda\n";
+    cout << "Su opcion: ";
+    cin >> aux;
+    cin.ignore();
+    switch(aux){
+        case 1:
+            auxDrink = drink::beer;
+            (*auxOrder).price += 2.50;
+            (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
+            break;
+        case 2:
+            auxDrink = drink::tea;
+            (*auxOrder).price += 1.99;
+            (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
+            break;
+        case 3:
+            auxDrink = drink::soda;
+            (*auxOrder).price += 0.99;
+            (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
+            break;
+        default:
+            cout << "Por favor escoga una opcion valida.\n";
+            break;
+    }
+}
+
+void menuDrink(inHouseOrder* auxOrder){
+    drink auxDrink;
+    int aux;
+    cout << "Bebida\n";
+    cout << "\t1. Cerveza\n";
+    cout << "\t2. Te\n";
+    cout << "\t3. Soda\n";
+    cout << "Su opcion: ";
+    cin >> aux;
+    cin.ignore();
+    switch(aux){
+        case 1:
+            auxDrink = drink::beer;
+            (*auxOrder).price += 2.50;
+            (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
+            break;
+        case 2:
+            auxDrink = drink::tea;
+            (*auxOrder).price += 1.99;
+            (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
+            break;
+        case 3:
+            auxDrink = drink::soda;
+            (*auxOrder).price += 0.99;
+            (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
+            break;
+        default:
+            cout << "Por favor escoga una opcion valida.\n";
+            break;
+    }
+}
+
+void dispatchTakeOut(){
+    int userID, confirmation;
+    bool found = false;
+    cout << "Por favor ingrese el identificador de la orden a despachar.\n";
+    cin >> userID;
+    for(int i = 0; i < takeOrder.size(); i++){
+        if(takeOrder[i].id == userID){
+            found = true;
+            cout << "Esta seguro que desea despachar esta orden?\n 1- Si\t 2- No\n";
+            cin >> confirmation;
+            cin.ignore();
+            if(confirmation == 1){
+                dispatchedTakeOut.insert(dispatchedTakeOut.end(), takeOrder[i]);
+                for(auto iter = takeOrder.begin(); iter != takeOrder.end(); ++iter){
+                    if(iter->id == userID){
+                        iter = takeOrder.erase(iter);
+                        break;
+                    }
+                }
+            }
+            else{}
+        }
+    }
+    if(found == false){
+        cout << "No se encontro la orden.\n";
+    }
+}
+
+void dispatchHouse(){
+    int userID, confirmation;
+    bool found = false;
+    cout << "Por favor ingrese el identificador de la orden a despachar.\n";
+    cin >> userID;
+    for(int i = 0; i < houseOrder.size(); i++){
+        if(houseOrder[i].id == userID){
+            found = true;
+            cout << "Esta seguro que desea despachar esta orden?\n 1- Si\t 2- No\n";
+            cin >> confirmation;
+            cin.ignore();
+            if(confirmation == 1){
+                dispatchedHouse.insert(dispatchedHouse.end(), houseOrder[i]);
                 for(auto iter = houseOrder.begin(); iter != houseOrder.end(); ++iter){
                     if(iter->id == userID){
                         iter = houseOrder.erase(iter);

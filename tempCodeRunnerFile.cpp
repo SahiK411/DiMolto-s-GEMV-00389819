@@ -1,1 +1,0 @@
-auxOrder.price
