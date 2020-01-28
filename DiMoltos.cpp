@@ -1,6 +1,7 @@
 #include <iostream>
-#include <string>
-#include <vector>
+#include <string> //Para valores string
+#include <vector> //Para las listas dinamicas
+#include <math.h> //Para la funcion ceil
 
 //Define declaration
 #define password "recursion"
@@ -68,8 +69,6 @@ void addHouseOrder();
 void showTakeOuts();
 void showHouseOrders();
 void showTotalPrice();
-void searchByNameTake();
-void searchByNameHouse();
 void deleteOrderTakeOut();
 void deleteOrderHouse();
 void menuAppe(takeOut* auxOrder);
@@ -78,6 +77,8 @@ void menuDish(takeOut* auxOrder);
 void menuDish(inHouseOrder* auxOrder);
 void menuDrink(takeOut* auxOrder);
 void menuDrink(inHouseOrder* auxOrder);
+void showTimeTake();
+void showTimeHouse();
 void dispatchTakeOut();
 void dispatchHouse();
 
@@ -122,10 +123,14 @@ void mainMenu(bool *outerCheck){
         cout << "\t2- Agregar un encargo en restaurante." << endl;
         cout << "\t3- Ver pedidos a domicilio." << endl;
         cout << "\t4- Ver encargos en restaurante." << endl;
-        cout << "\t5- Ver total de venta." << endl;
-        cout << "\t6- Buscar una orden por nombre." << endl;
-        cout << "\t7- Borrar una orden." << endl;
-        cout << "\t8- Regresar." << endl;
+        cout << "\t5- Despachar ordenes a domicilio." << endl;
+        cout << "\t6- Despachar ordenes en restaurante." << endl;
+        cout << "\t7- Ver tiempo de espera promedio a domicilio." << endl;
+        cout << "\t8- Ver tiempo de espera promedio en restaurante." << endl;
+        cout << "\t9- Cancelar una orden." << endl;
+        cout << "\t10- Calcular total de venta." << endl;
+        cout << "\t11- Cambiar de usuario." << endl;
+        cout << "\t0- Salir." << endl;
         cin >> userOption;
         cin.ignore();
         switch(userOption){
@@ -142,20 +147,18 @@ void mainMenu(bool *outerCheck){
                 showHouseOrders();
                 break;
             case 5:
-                showTotalPrice();
+                dispatchTakeOut();
                 break;
             case 6:
-                cout << "En cual directorio desea buscar?\n 1- A domicilio\t 2- En restaurante\n";
-                cin >> temp;
-                cin.ignore();
-                if(temp == 1){
-                    searchByNameTake();
-                }
-                else if(temp == 2){
-                    searchByNameHouse();
-                }
+                dispatchHouse();
                 break;
             case 7:
+                showTimeTake();
+                break;
+            case 8:
+                showTimeHouse();
+                break;
+            case 9:
                 if(administrator == true){
                     int deleteCheck;
                     cout << "Que tipo de orden desea borrar?\n 1- A Domicilio\t 2- En restaurante\n";
@@ -176,8 +179,15 @@ void mainMenu(bool *outerCheck){
                     cout << "Solo los administradores pueden borrar ordenes.\n";
                 }
                 break;
-            case 8:
+            case 10:
+                showTotalPrice();
+                break;
+            case 11:
                 correctPass = false;
+                break;
+            case 0:
+                correctPass = false;
+                *outerCheck = false;
                 break;
             default:
                 break;
@@ -738,17 +748,17 @@ void menuAppe(takeOut* auxOrder){
         switch(aux){
             case 1: 
                 auxAppe = appetizer::pizzaRolls;
-                (*auxOrder).price += 3.99;
+                (*auxOrder).price += 4.99;
                 (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
                 break;
             case 2:
                 auxAppe = appetizer::garlicBread;
-                (*auxOrder).price += 2.99;
+                (*auxOrder).price += 3.99;
                 (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
                 break;
             case 3:
                 auxAppe = appetizer::cheeseSticks;
-                (*auxOrder).price += 3.99;
+                (*auxOrder).price += 3.75;
                 (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
                 break;
             default:
@@ -770,17 +780,17 @@ void menuAppe(inHouseOrder* auxOrder){
         switch(aux){
             case 1: 
                 auxAppe = appetizer::pizzaRolls;
-                (*auxOrder).price += 3.99;
+                (*auxOrder).price += 4.99;
                 (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
                 break;
             case 2:
                 auxAppe = appetizer::garlicBread;
-                (*auxOrder).price += 2.99;
+                (*auxOrder).price += 3.99;
                 (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
                 break;
             case 3:
                 auxAppe = appetizer::cheeseSticks;
-                (*auxOrder).price += 3.99;
+                (*auxOrder).price += 3.75;
                 (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
                 break;
             default:
@@ -802,17 +812,17 @@ void menuDish(takeOut* auxOrder){
     switch(aux){
         case 1:
             auxDish = mainDish::pizza;
-            (*auxOrder).price += 6.99;
+            (*auxOrder).price += 13.99;
             (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
             break;
         case 2:
             auxDish = mainDish::pasta;
-            (*auxOrder).price += 9.99;
+            (*auxOrder).price += 5.55;
             (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
             break;
         case 3:
             auxDish = mainDish::lasagna;
-            (*auxOrder).price += 8.99;
+            (*auxOrder).price += 6.25;
             (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
             break;
         default:
@@ -834,17 +844,17 @@ void menuDish(inHouseOrder* auxOrder){
     switch(aux){
         case 1:
             auxDish = mainDish::pizza;
-            (*auxOrder).price += 6.99;
+            (*auxOrder).price += 13.99;
             (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
             break;
         case 2:
             auxDish = mainDish::pasta;
-            (*auxOrder).price += 9.99;
+            (*auxOrder).price += 5.55;
             (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
             break;
         case 3:
             auxDish = mainDish::lasagna;
-            (*auxOrder).price += 8.99;
+            (*auxOrder).price += 6.25;
             (*auxOrder).orderDish.insert((*auxOrder).orderDish.end(), auxDish);
             break;
         default:
@@ -858,7 +868,7 @@ void menuDrink(takeOut* auxOrder){
     int aux;
     cout << "Bebida\n";
     cout << "\t1. Cerveza\n";
-    cout << "\t2. Te\n";
+    cout << "\t2. Te Helado\n";
     cout << "\t3. Soda\n";
     cout << "Su opcion: ";
     cin >> aux;
@@ -866,17 +876,17 @@ void menuDrink(takeOut* auxOrder){
     switch(aux){
         case 1:
             auxDrink = drink::beer;
-            (*auxOrder).price += 2.50;
+            (*auxOrder).price += 1.99;
             (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
             break;
         case 2:
             auxDrink = drink::tea;
-            (*auxOrder).price += 1.99;
+            (*auxOrder).price += 1.15;
             (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
             break;
         case 3:
             auxDrink = drink::soda;
-            (*auxOrder).price += 0.99;
+            (*auxOrder).price += 0.95;
             (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
             break;
         default:
@@ -890,7 +900,7 @@ void menuDrink(inHouseOrder* auxOrder){
     int aux;
     cout << "Bebida\n";
     cout << "\t1. Cerveza\n";
-    cout << "\t2. Te\n";
+    cout << "\t2. Te Helado\n";
     cout << "\t3. Soda\n";
     cout << "Su opcion: ";
     cin >> aux;
@@ -898,17 +908,17 @@ void menuDrink(inHouseOrder* auxOrder){
     switch(aux){
         case 1:
             auxDrink = drink::beer;
-            (*auxOrder).price += 2.50;
+            (*auxOrder).price += 1.99;
             (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
             break;
         case 2:
             auxDrink = drink::tea;
-            (*auxOrder).price += 1.99;
+            (*auxOrder).price += 1.15;
             (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
             break;
         case 3:
             auxDrink = drink::soda;
-            (*auxOrder).price += 0.99;
+            (*auxOrder).price += 0.95;
             (*auxOrder).orderDrink.insert((*auxOrder).orderDrink.end(), auxDrink);
             break;
         default:
@@ -966,6 +976,49 @@ void dispatchHouse(){
                 }
             }
             else{}
+        }
+    }
+    if(found == false){
+        cout << "No se encontro la orden.\n";
+    }
+}
+
+void showTimeTake(){
+    int userID;
+    float time;
+    bool found = false;
+    cout << "Por favor ingrese el identificador de la orden a ver.\n";
+    cin >> userID;
+    for(int i = 0; i < takeOrder.size(); i++){
+        if(takeOrder[i].id == userID){
+            found = true;
+            time = takeOrder[i].orderAppe.size() * 1.10;
+            time += takeOrder[i].orderDish.size() * 1.5;
+            time += takeOrder[i].orderDrink.size() * 1.35;
+            time += 15;
+            ceil(time);
+            cout << "Esta orden tomara aproximadamente " << time << "minutos.\n";
+        }
+    }
+    if(found == false){
+        cout << "No se encontro la orden.\n";
+    }
+}
+
+void showTimeHouse(){
+    int userID;
+    float time;
+    bool found = false;
+    cout << "Por favor ingrese el identificador de la orden a ver.\n";
+    cin >> userID;
+    for(int i = 0; i < houseOrder.size(); i++){
+        if(houseOrder[i].id == userID){
+            found = true;
+            time = houseOrder[i].orderAppe.size() * 1.10;
+            time += houseOrder[i].orderDish.size() * 1.5;
+            time += houseOrder[i].orderDrink.size() * 1.35;
+            ceil(time);
+            cout << "Esta orden tomara aproximadamente " << time << "minutos.\n";
         }
     }
     if(found == false){
