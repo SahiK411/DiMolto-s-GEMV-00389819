@@ -752,8 +752,8 @@ void showTimeTake(){
 }
 
 void showTimeHouse(){
-    int userID;
-    float time;
+    int userID = 1;
+    float time = 0;
     bool found = false;
     cout << "Por favor ingrese el identificador de la orden a ver.\n";
     cin >> userID;
