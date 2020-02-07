@@ -145,10 +145,20 @@ void mainMenu(bool *outerCheck){
                 addHouseOrder();
                 break;
             case 3:
+                if(takeOrder.size() == 0){
+                    cout << "No hay ordenes en proceso.\n";
+                }
+                else{
                 showTakeOuts();
+                }
                 break;
             case 4:
+                if(takeOrder.size() == 0){
+                    cout << "No hay ordenes en proceso.\n";
+                }
+                else{
                 showHouseOrders();
+                }
                 break;
             case 5:
                 dispatchTakeOut();
@@ -408,19 +418,20 @@ void showTakeOuts(){
         cout << "Municipio: " << takeOrder[i].clientAddress.county << endl;
         cout << "Departamento: " << takeOrder[i].clientAddress.state << endl;
         cout << "Numero del cliente: " << takeOrder[i].clientPhoneNumber << endl;
+        cout << "Aperitivo(s): " << endl;
+        for(int j = 0; j < takeOrder[i].orderAppe.size(); j++){
+            cout << j + 1 << ": " << printAppe[takeOrder[i].orderAppe[j]] << endl;
+        }
         cout << "Plato(s) principal(es): " << endl;
         for(int j = 0; j < takeOrder[i].orderDish.size(); j++){
             cout << j + 1 << ": " << printDish[takeOrder[i].orderDish[j]] << endl;
         }
-        cout << "Aperitivo(s): " << endl;
-        for(int j = 0; j < takeOrder[i].orderAppe.size(); j++){
-            cout << j + 1 << ": " << printDish[takeOrder[i].orderAppe[j]] << endl;
-        }
         cout << "Bebida(s): " << endl;
         for(int j = 0; j < takeOrder[i].orderDrink.size(); j++){
-            cout << j + 1 << ": " << printDish[takeOrder[i].orderDrink[j]] << endl;
+            cout << j + 1 << ": " << printDrink[takeOrder[i].orderDrink[j]] << endl;
         }
-        cout << "Precio: " << takeOrder[i].price << endl;
+        cout << "Subtotal: $" << takeOrder[i].price << endl;
+        cout << "Total con impuesto: $" << (takeOrder[i].price * 1.13) << endl;
         cout << "Metodo de pago: " << printMethod[takeOrder[i].orderMethod] << endl;
         showTimeTake(takeOrder[i].id);
     }
@@ -435,19 +446,20 @@ void showHouseOrders(){
         cout << "Primer apellido del cliente: " << houseOrder[i].clientName.surName << endl;
         cout << "Segundo apellido del cliente: " << houseOrder[i].clientName.lastName << endl;
         cout << "Personas en la mesa: " << houseOrder[i].clientsPerTable << endl;
+        cout << "Aperitivo(s): " << endl;
+        for(int j = 0; j < houseOrder[i].orderAppe.size(); j++){
+            cout << j + 1 << ": " << printAppe[houseOrder[i].orderAppe[j]] << endl;
+        }
         cout << "Plato(s) principal(es): " << endl;
         for(int j = 0; j < houseOrder[i].orderDish.size(); j++){
             cout << j + 1 << ": " << printDish[houseOrder[i].orderDish[j]] << endl;
         }
-        cout << "Aperitivo(s): " << endl;
-        for(int j = 0; j < houseOrder[i].orderAppe.size(); j++){
-            cout << j + 1 << ": " << printDish[houseOrder[i].orderAppe[j]] << endl;
-        }
         cout << "Bebida(s): " << endl;
         for(int j = 0; j < houseOrder[i].orderDrink.size(); j++){
-            cout << j + 1 << ": " << printDish[houseOrder[i].orderDrink[j]] << endl;
+            cout << j + 1 << ": " << printDrink[houseOrder[i].orderDrink[j]] << endl;
         }
-        cout << "Precio: " << houseOrder[i].price << endl;
+        cout << "Subtotal: $" << houseOrder[i].price << endl;
+        cout << "Total con impuesto: $" << (houseOrder[i].price * 1.13) << endl;
         cout << "Metodo de pago: " << printMethod[houseOrder[i].orderMethod] << endl;
         showTimeHouse(houseOrder[i].id);
     }
@@ -457,13 +469,13 @@ void showTotalPrice(){
     //Showing total price using dispatched orders
     float totalPrice = 0;
     for(int i = 0; i < dispatchedTakeOut.size(); i++){
-        totalPrice += dispatchedTakeOut[i].price;
+        totalPrice += (dispatchedTakeOut[i].price * 1.13);
     }
     for(int i = 0; i < dispatchedHouse.size(); i++){
-        totalPrice += dispatchedHouse[i].price;
+        totalPrice += (dispatchedHouse[i].price * 1.13);
     }
     cout.precision(5);
-    cout << "Las ganancias de hoy son: $" << totalPrice << "\n";
+    cout << "El total en ventas (incluyendo el IVA) es de: $" << totalPrice << "\n";
 }
 
 void deleteOrderTakeOut(){
