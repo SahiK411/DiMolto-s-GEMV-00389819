@@ -79,8 +79,10 @@ void menuDish(takeOut* auxOrder);
 void menuDish(inHouseOrder* auxOrder);
 void menuDrink(takeOut* auxOrder);
 void menuDrink(inHouseOrder* auxOrder);
-void showTimeTake();
-void showTimeHouse();
+void showTimeTake(int userID);
+void showTimeHouse(int userID);
+float showAverageTimeTake(float time, int currentPosition);
+float showAverageTimeHouse(float time, int currentPosition);
 void dispatchTakeOut();
 void dispatchHouse();
 
@@ -155,10 +157,24 @@ void mainMenu(bool *outerCheck){
                 dispatchHouse();
                 break;
             case 7:
-                showTimeTake();
+                if(takeOrder.size() == 0){
+                    cout << "No hay ordenes en proceso.\n";
+                }
+                else{
+                    cout << "El tiempo de espera promedio es de: ";
+                    cout << ceil(showAverageTimeTake(0, takeOrder.size() - 1) / takeOrder.size());
+                    cout << " minutos.\n";
+                }
                 break;
             case 8:
-                showTimeHouse();
+                if(houseOrder.size() == 0){
+                    cout << "No hay ordenes en proceso.\n";
+                }
+                else{
+                    cout << "El tiempo de espera promedio es de: ";
+                    cout << ceil(showAverageTimeHouse(0, houseOrder.size() - 1) / houseOrder.size());
+                    cout << " minutos.\n";
+                }
                 break;
             case 9:
                 if(administrator == true){
@@ -242,6 +258,9 @@ void addTakeOut(){
         if(aux == 2){
             cont = false;
         }
+        else{
+            aux = 0;
+        }
     }while(cont);
     do{
         cont = true;
@@ -251,6 +270,9 @@ void addTakeOut(){
         if(aux == 2){
             cont = false;
         }
+        else{
+            aux = 0;
+        }
     }while(cont);
     do{
         cont = true;
@@ -259,6 +281,9 @@ void addTakeOut(){
         cin >> aux;
         if(aux == 2){
             cont = false;
+        }
+        else{
+            aux = 0;
         }
     }while(cont);
     do{
@@ -317,6 +342,9 @@ void addHouseOrder(){
         if(aux == 2){
             cont = false;
         }
+        else{
+            aux = 0;
+        }
     }while(cont);
     do{
         cont = true;
@@ -325,6 +353,9 @@ void addHouseOrder(){
         cin >> aux;
         if(aux == 2){
             cont = false;
+        }
+        else{
+            aux = 0;
         }
     }while(cont);
 
@@ -335,6 +366,9 @@ void addHouseOrder(){
         cin >> aux;
         if(aux == 2){
             cont = false;
+        }
+        else{
+            aux = 0;
         }
     }while(cont);
     
@@ -388,6 +422,7 @@ void showTakeOuts(){
         }
         cout << "Precio: " << takeOrder[i].price << endl;
         cout << "Metodo de pago: " << printMethod[takeOrder[i].orderMethod] << endl;
+        showTimeTake(takeOrder[i].id);
     }
 }
 
@@ -414,6 +449,7 @@ void showHouseOrders(){
         }
         cout << "Precio: " << houseOrder[i].price << endl;
         cout << "Metodo de pago: " << printMethod[houseOrder[i].orderMethod] << endl;
+        showTimeHouse(houseOrder[i].id);
     }
 }
 
@@ -486,6 +522,7 @@ void deleteOrderHouse(){
 }
 
 void menuAppe(takeOut* auxOrder){
+    //Appetizer menu for take out
     appetizer auxAppe;
     int aux;
     cout << "Entrada\n";
@@ -521,6 +558,7 @@ void menuAppe(takeOut* auxOrder){
 }
 
 void menuAppe(inHouseOrder* auxOrder){
+    //Appetizer menu in restaurant
     appetizer auxAppe;
     int aux;
     cout << "Entrada\n";
@@ -556,6 +594,7 @@ void menuAppe(inHouseOrder* auxOrder){
 }
 
 void menuDish(takeOut* auxOrder){
+    //Main dish menu for take out
     mainDish auxDish;
     int aux;
     cout << "Plato principal\n";
@@ -591,6 +630,7 @@ void menuDish(takeOut* auxOrder){
 }
 
 void menuDish(inHouseOrder* auxOrder){
+    //Main dish menu in restaurant
     mainDish auxDish;
     int aux;
     cout << "Plato principal\n";
@@ -626,6 +666,7 @@ void menuDish(inHouseOrder* auxOrder){
 }
 
 void menuDrink(takeOut* auxOrder){
+    //Drink menu for take out
     drink auxDrink;
     int aux;
     cout << "Bebida\n";
@@ -661,6 +702,7 @@ void menuDrink(takeOut* auxOrder){
 }
 
 void menuDrink(inHouseOrder* auxOrder){
+    //Drink menu in restaurant
     drink auxDrink;
     int aux;
     cout << "Bebida\n";
@@ -696,6 +738,7 @@ void menuDrink(inHouseOrder* auxOrder){
 }
 
 void dispatchTakeOut(){
+    //Dispatch an order for take out
     int userID, confirmation;
     bool found = false;
     cout << "Por favor ingrese el identificador de la orden a despachar.\n";
@@ -724,6 +767,7 @@ void dispatchTakeOut(){
 }
 
 void dispatchHouse(){
+    //Dispatch an order in restaurant
     int userID, confirmation;
     bool found = false;
     cout << "Por favor ingrese el identificador de la orden a despachar.\n";
@@ -751,12 +795,10 @@ void dispatchHouse(){
     }
 }
 
-void showTimeTake(){
-    int userID;
+void showTimeTake(int userID){
+    //Showing the individual time for take out orders
     float time;
     bool found = false;
-    cout << "Por favor ingrese el identificador de la orden a ver.\n";
-    cin >> userID;
     for(int i = 0; i < takeOrder.size(); i++){
         if(takeOrder[i].id == userID){
             found = true;
@@ -773,12 +815,10 @@ void showTimeTake(){
     }
 }
 
-void showTimeHouse(){
-    int userID = 1;
+void showTimeHouse(int userID){
+    //Showing the individual time for restaurant orders
     float time = 0;
     bool found = false;
-    cout << "Por favor ingrese el identificador de la orden a ver.\n";
-    cin >> userID;
     for(int i = 0; i < houseOrder.size(); i++){
         if(houseOrder[i].id == userID){
             found = true;
@@ -791,6 +831,37 @@ void showTimeHouse(){
     }
     if(found == false){
         cout << "No se encontro la orden.\n";
+    }
+}
+
+float showAverageTimeTake(float time, int currentPosition){
+    int temp = 0;
+    if(currentPosition < 0){
+        return time;
+    }
+    else{
+        time += takeOrder[currentPosition].orderAppe.size() * 1.10;
+        time += takeOrder[currentPosition].orderDish.size() * 1.5;
+        time += takeOrder[currentPosition].orderDrink.size() * 1.35;
+        time += 15;
+        temp = currentPosition - 1;
+        time = showAverageTimeTake(time, temp);
+        return ceil(time);
+    }
+}
+
+float showAverageTimeHouse(float time, int currentPosition){
+    int temp = 0;
+    if(currentPosition < 0){
+        return time;
+    }
+    else{
+        time += houseOrder[currentPosition].orderAppe.size() * 1.10;
+        time += houseOrder[currentPosition].orderDish.size() * 1.5;
+        time += houseOrder[currentPosition].orderDrink.size() * 1.35;
+        temp = currentPosition - 1;
+        time = showAverageTimeHouse(time, temp);
+        return time;
     }
 }
 
