@@ -24,8 +24,6 @@ struct address{
 
 struct name{
     string firstName;
-    string middleName;
-    string surName;
     string lastName;
 };
 
@@ -236,13 +234,7 @@ void addTakeOut(){
     cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
     getline(cin, auxOrder.clientName.firstName);
 
-    cout << "Ingrese el segundo nombre.\n";
-    getline(cin, auxOrder.clientName.middleName);
-
-    cout << "Ingrese el primer apellido.\n";
-    getline(cin, auxOrder.clientName.surName);
-
-    cout << "Ingrese el segundo apellido.\n";
+    cout << "Ingrese el apellido.\n";
     getline(cin, auxOrder.clientName.lastName);
             
     cout << "Por favor digite su direccion.\n Ingrese el numero de casa.\n";
@@ -263,7 +255,7 @@ void addTakeOut(){
     do{
         cont = true;
         menuAppe(&auxOrder);
-        cout << "Continuar?\n \t1. Si\n \t2. No\n";
+        cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
             cont = false;
@@ -275,7 +267,7 @@ void addTakeOut(){
     do{
         cont = true;
         menuDish(&auxOrder);
-        cout << "Continuar?\n \t1. Si\n \t2. No\n";
+        cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
             cont = false;
@@ -287,7 +279,7 @@ void addTakeOut(){
     do{
         cont = true;
         menuDrink(&auxOrder);
-        cout << "Continuar?\n \t1. Si\n \t2. No\n";
+        cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
             cont = false;
@@ -332,13 +324,7 @@ void addHouseOrder(){
     cout << "Por favor digite su nombre.\n Ingrese el primer nombre.\n";
     getline(cin, auxOrder.clientName.firstName);
 
-    cout << "Ingrese el segundo nombre.\n";
-    getline(cin, auxOrder.clientName.middleName);
-
-    cout << "Ingrese el primer apellido.\n";
-    getline(cin, auxOrder.clientName.surName);
-
-    cout << "Ingrese el segundo apellido.\n";
+    cout << "Ingrese el apellido.\n";
     getline(cin, auxOrder.clientName.lastName);
             
     cout << "Por favor indique el numero de personas en la mesa.\n";
@@ -347,7 +333,7 @@ void addHouseOrder(){
     do{
         cont = true;
         menuAppe(&auxOrder);
-        cout << "Continuar?\n \t1. Si\n \t2. No\n";
+        cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
             cont = false;
@@ -359,7 +345,7 @@ void addHouseOrder(){
     do{
         cont = true;
         menuDish(&auxOrder);
-        cout << "Continuar?\n \t1. Si\n \t2. No\n";
+        cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
             cont = false;
@@ -372,7 +358,7 @@ void addHouseOrder(){
     do{
         cont = true;
         menuDrink(&auxOrder);
-        cout << "Continuar?\n \t1. Si\n \t2. No\n";
+        cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
         if(aux == 2){
             cont = false;
@@ -407,11 +393,12 @@ void addHouseOrder(){
 }
 
 void showTakeOuts(){
+    if(takeOrder.empty()){
+        return;
+    }
     for(int i = 0; i < takeOrder.size(); i++){
         cout << "Identificador de orden: " << takeOrder[i].id << endl;
         cout << "Primer nombre del cliente: " << takeOrder[i].clientName.firstName << endl;
-        cout << "Segundo nombre del cliente: " << takeOrder[i].clientName.middleName << endl;
-        cout << "Primer apellido del cliente: " << takeOrder[i].clientName.surName << endl;
         cout << "Segundo apellido del cliente: " << takeOrder[i].clientName.lastName << endl;
         cout << "Numero de casa: " << takeOrder[i].clientAddress.houseNumber << endl;
         cout << "Colonia: " << takeOrder[i].clientAddress.neighborhood << endl;
@@ -434,16 +421,17 @@ void showTakeOuts(){
         cout << "Total con impuesto: $" << (takeOrder[i].price * 1.13) << endl;
         cout << "Metodo de pago: " << printMethod[takeOrder[i].orderMethod] << endl;
         showTimeTake(takeOrder[i].id);
+        cout << endl << endl;
     }
 }
 
 void showHouseOrders(){
-    string temp;
+    if(houseOrder.empty()){
+        return;
+    }
     for(int i = 0; i < houseOrder.size(); i++){
         cout << "Identificador de orden: " << houseOrder[i].id << endl;
         cout << "Primer nombre del cliente: " << houseOrder[i].clientName.firstName << endl;
-        cout << "Segundo nombre del cliente: " << houseOrder[i].clientName.middleName << endl;
-        cout << "Primer apellido del cliente: " << houseOrder[i].clientName.surName << endl;
         cout << "Segundo apellido del cliente: " << houseOrder[i].clientName.lastName << endl;
         cout << "Personas en la mesa: " << houseOrder[i].clientsPerTable << endl;
         cout << "Aperitivo(s): " << endl;
@@ -462,17 +450,24 @@ void showHouseOrders(){
         cout << "Total con impuesto: $" << (houseOrder[i].price * 1.13) << endl;
         cout << "Metodo de pago: " << printMethod[houseOrder[i].orderMethod] << endl;
         showTimeHouse(houseOrder[i].id);
+        cout << endl << endl;
     }
 }
 
 void showTotalPrice(){
     //Showing total price using dispatched orders
     float totalPrice = 0;
-    for(int i = 0; i < dispatchedTakeOut.size(); i++){
-        totalPrice += (dispatchedTakeOut[i].price * 1.13);
+    if(dispatchedTakeOut.empty()){}
+    else{
+        for(int i = 0; i < dispatchedTakeOut.size(); i++){
+            totalPrice += (dispatchedTakeOut[i].price * 1.13);
+        }
     }
-    for(int i = 0; i < dispatchedHouse.size(); i++){
-        totalPrice += (dispatchedHouse[i].price * 1.13);
+    if(dispatchedHouse.empty()){}
+    else{
+        for(int i = 0; i < dispatchedHouse.size(); i++){
+            totalPrice += (dispatchedHouse[i].price * 1.13);
+        }
     }
     cout.precision(5);
     cout << "El total en ventas (incluyendo el IVA) es de: $" << totalPrice << "\n";
@@ -751,59 +746,23 @@ void menuDrink(inHouseOrder* auxOrder){
 
 void dispatchTakeOut(){
     //Dispatch an order for take out
-    int userID, confirmation;
-    bool found = false;
-    cout << "Por favor ingrese el identificador de la orden a despachar.\n";
-    cin >> userID;
-    for(int i = 0; i < takeOrder.size(); i++){
-        if(takeOrder[i].id == userID){
-            found = true;
-            cout << "Esta seguro que desea despachar esta orden?\n 1- Si\t 2- No\n";
-            cin >> confirmation;
-            cin.ignore();
-            if(confirmation == 1){
-                dispatchedTakeOut.insert(dispatchedTakeOut.end(), takeOrder[i]);
-                for(auto iter = takeOrder.begin(); iter != takeOrder.end(); ++iter){
-                    if(iter->id == userID){
-                        iter = takeOrder.erase(iter);
-                        break;
-                    }
-                }
-            }
-            else{}
-        }
-    }
-    if(found == false){
-        cout << "No se encontro la orden.\n";
+    int confirmation = 0;
+    cout << "Se despachara la orden a domicilio mas vieja en la lista, desea continuar?\n 1. Si\t 2.No\n";
+    cin >> confirmation;
+    if(confirmation == 1){
+        dispatchedTakeOut.insert(dispatchedTakeOut.end(), takeOrder.front());
+        takeOrder.erase(takeOrder.begin());
     }
 }
 
 void dispatchHouse(){
     //Dispatch an order in restaurant
-    int userID, confirmation;
-    bool found = false;
-    cout << "Por favor ingrese el identificador de la orden a despachar.\n";
-    cin >> userID;
-    for(int i = 0; i < houseOrder.size(); i++){
-        if(houseOrder[i].id == userID){
-            found = true;
-            cout << "Esta seguro que desea despachar esta orden?\n 1- Si\t 2- No\n";
-            cin >> confirmation;
-            cin.ignore();
-            if(confirmation == 1){
-                dispatchedHouse.insert(dispatchedHouse.end(), houseOrder[i]);
-                for(auto iter = houseOrder.begin(); iter != houseOrder.end(); ++iter){
-                    if(iter->id == userID){
-                        iter = houseOrder.erase(iter);
-                        break;
-                    }
-                }
-            }
-            else{}
-        }
-    }
-    if(found == false){
-        cout << "No se encontro la orden.\n";
+    int confirmation = 0;
+    cout << "Se despachara la orden en restaurante mas vieja en la lista, desea continuar?\n 1. Si\t 2.No\n";
+    cin >> confirmation;
+    if(confirmation == 1){
+        dispatchedHouse.insert(dispatchedHouse.end(), houseOrder.front());
+        houseOrder.erase(houseOrder.begin());
     }
 }
 
