@@ -1,5 +1,5 @@
 <dl>
-    <h1>Pizzería <strong>XXXXXXXXXX</strong></h1>
+    <h1>Pizzería <strong>Di Molto's</strong></h1>
     <h3><strong>Sumario</strong></h3>
     <hr>
     <ol>
@@ -470,26 +470,26 @@
     <p>
         <em>¿Qué aprendí con la realización de este proyecto?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>La buena utilizacion de structs y enums.</small>
     </p>
     <p>
         <em>¿Qué fue lo más difícil de implementar?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>La funcion de mostrar el tiempo promedio, debido a la recursion.</small>
     </p>
     <p>
         <em>¿Qué fue lo más fácil de implementar?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>La funcion para agregar ordenes.</small>
     </p>
     <p>
         <em>¿Qué cambiaría en el desempeño del catedrático?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Los nombres de las variables en los codigos de ejemplo.</small>
     </p>
     <p>
         <em>¿Qué cambiaría en el desempeño del instructor?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Es satisfactorio.</small>
     </p>
 </dl>
