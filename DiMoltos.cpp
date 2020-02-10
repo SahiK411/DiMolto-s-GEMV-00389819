@@ -89,7 +89,7 @@ void mainMenu(bool *outerCheck){
     //Local variables.
     string userInput;
     bool correctPass = false, administrator = false;
-    int userOption, temp = 0;
+    int userOption = 0;
 
     cout << "Con que tipo de cuenta desea operar?\n 1- Empleado \t2- Administrador\t 3- Salir\n";
     cin >> userInput;
@@ -257,6 +257,7 @@ void addTakeOut(){
         menuAppe(&auxOrder);
         cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
+        cin.ignore();
         if(aux == 2){
             cont = false;
         }
@@ -269,6 +270,7 @@ void addTakeOut(){
         menuDish(&auxOrder);
         cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
+        cin.ignore();
         if(aux == 2){
             cont = false;
         }
@@ -281,6 +283,7 @@ void addTakeOut(){
         menuDrink(&auxOrder);
         cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
+        cin.ignore();
         if(aux == 2){
             cont = false;
         }
@@ -329,12 +332,14 @@ void addHouseOrder(){
             
     cout << "Por favor indique el numero de personas en la mesa.\n";
     cin >> auxOrder.clientsPerTable;
+    cin.ignore();
 
     do{
         cont = true;
         menuAppe(&auxOrder);
         cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
+        cin.ignore();
         if(aux == 2){
             cont = false;
         }
@@ -347,6 +352,7 @@ void addHouseOrder(){
         menuDish(&auxOrder);
         cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
+        cin.ignore();
         if(aux == 2){
             cont = false;
         }
@@ -360,6 +366,7 @@ void addHouseOrder(){
         menuDrink(&auxOrder);
         cout << "Continuar agregando?\n \t1. Si\n \t2. No\n";
         cin >> aux;
+        cin.ignore();
         if(aux == 2){
             cont = false;
         }
@@ -533,35 +540,35 @@ void menuAppe(takeOut* auxOrder){
     appetizer auxAppe;
     int aux;
     cout << "Entrada\n";
-        cout << "\t1. Palitroque\n";
-        cout << "\t2. Pan con ajo\n";
-        cout << "\t3. Palitos de queso\n";
-        cout << "\t4. Continuar sin pedir.\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1: 
-                auxAppe = appetizer::pizzaRolls;
-                (*auxOrder).price += 4.99;
-                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
-                break;
-            case 2:
-                auxAppe = appetizer::garlicBread;
-                (*auxOrder).price += 3.99;
-                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
-                break;
-            case 3:
-                auxAppe = appetizer::cheeseSticks;
-                (*auxOrder).price += 3.75;
-                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
-                break;
-            case 4:
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+    cout << "\t1. Palitroque\n";
+    cout << "\t2. Pan con ajo\n";
+    cout << "\t3. Palitos de queso\n";
+    cout << "\t4. Continuar sin pedir.\n";
+    cout << "Su opcion: ";
+    cin >> aux;
+    cin.ignore();
+    switch(aux){
+        case 1: 
+            auxAppe = appetizer::pizzaRolls;
+            (*auxOrder).price += 4.99;
+            (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+            break;
+        case 2:
+            auxAppe = appetizer::garlicBread;
+            (*auxOrder).price += 3.99;
+            (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+            break;
+        case 3:
+            auxAppe = appetizer::cheeseSticks;
+            (*auxOrder).price += 3.75;
+            (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+            break;
+        case 4:
+            break;
+        default:
+            cout << "Por favor escoga una opcion valida.\n";
+            break;
+    }
 }
 
 void menuAppe(inHouseOrder* auxOrder){
@@ -569,35 +576,35 @@ void menuAppe(inHouseOrder* auxOrder){
     appetizer auxAppe;
     int aux;
     cout << "Entrada\n";
-        cout << "\t1. Palitroque\n";
-        cout << "\t2. Pan con ajo\n";
-        cout << "\t3. Palitos de queso\n";
-        cout << "\t4. Continuar sin pedir.\n";
-        cout << "Su opcion: ";
-        cin >> aux;
-        cin.ignore();
-        switch(aux){
-            case 1: 
-                auxAppe = appetizer::pizzaRolls;
-                (*auxOrder).price += 4.99;
-                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
-                break;
-            case 2:
-                auxAppe = appetizer::garlicBread;
-                (*auxOrder).price += 3.99;
-                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
-                break;
-            case 3:
-                auxAppe = appetizer::cheeseSticks;
-                (*auxOrder).price += 3.75;
-                (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
-                break;
-            case 4:
-                break;
-            default:
-                cout << "Por favor escoga una opcion valida.\n";
-                break;
-        }
+    cout << "\t1. Palitroque\n";
+    cout << "\t2. Pan con ajo\n";
+    cout << "\t3. Palitos de queso\n";
+    cout << "\t4. Continuar sin pedir.\n";
+    cout << "Su opcion: ";
+    cin >> aux;
+    cin.ignore();
+    switch(aux){
+        case 1: 
+            auxAppe = appetizer::pizzaRolls;
+            (*auxOrder).price += 4.99;
+            (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+            break;
+        case 2:
+            auxAppe = appetizer::garlicBread;
+            (*auxOrder).price += 3.99;
+            (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+            break;
+        case 3:
+            auxAppe = appetizer::cheeseSticks;
+            (*auxOrder).price += 3.75;
+            (*auxOrder).orderAppe.insert((*auxOrder).orderAppe.end(), auxAppe);
+            break;
+        case 4:
+            break;
+        default:
+            cout << "Por favor escoga una opcion valida.\n";
+            break;
+    }
 }
 
 void menuDish(takeOut* auxOrder){
