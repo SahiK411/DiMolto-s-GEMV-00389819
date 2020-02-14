@@ -151,11 +151,11 @@ void mainMenu(bool *outerCheck){
                 }
                 break;
             case 4:
-                if(takeOrder.size() == 0){
+                if(houseOrder.size() == 0){
                     cout << "No hay ordenes en proceso.\n";
                 }
                 else{
-                showHouseOrders();
+                    showHouseOrders();
                 }
                 break;
             case 5:
